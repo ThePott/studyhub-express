@@ -89,21 +89,21 @@ export interface RecruitDetailLecture {
 
 export interface RecruitDetail {
   // NOTE: author api 요청드림
-  author_nickname: string
+  author: string
   study_name: string
-  id: number
+  uuid: string
   title: string
   content: string
   // TODO: 이미지 api 연결하고 이부분 살펴봐야 함
-  content_images: string[] // 이것도 필요하니 detail 쪽으로 가야겠네... 하지만 이미지는 아직 어떻게 하는지 모르겠다
+  images: string[] // 이것도 필요하니 detail 쪽으로 가야겠네... 하지만 이미지는 아직 어떻게 하는지 모르겠다
   attachments: RecruitDetailAttachment[] // 이게 필요하다그러니 detail 매번 요청보내야 함
-  expected_personnel: number
-  expected_fee: number
+  expected_headcount: number
+  estimated_fee: number
   lectures: RecruitDetailLecture[]
   tags: string[]
-  due_date: string
+  close_at: string
   created_at: string
-  views: number
+  view_count: number
   bookmark_count: number
   is_bookmarked: boolean
 }
