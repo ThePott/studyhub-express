@@ -90,7 +90,7 @@ export interface RecruitDetailLecture {
 export interface RecruitDetail {
   // NOTE: author api 요청드림
   author: string
-  study_name: string
+  study_group_name: string
   uuid: string
   title: string
   content: string
