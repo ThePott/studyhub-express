@@ -1,4 +1,7 @@
-import type { NotificationsResponseData } from '@/interfaces/index.js'
+import type {
+  NotificationCounts,
+  NotificationsResponseData,
+} from '@/interfaces/index.js'
 import express from 'express'
 import dummyNotifications from './_dummyNotifications.js'
 import fs from 'fs'
@@ -27,6 +30,13 @@ notificationsRouter.get('/', async (req, res) => {
   )
 
   const count = filteredDummy.length
+  const counts: NotificationCounts = {
+    all: dummyNotifications.length,
+    read: dummyNotifications.filter((notification) => notification.is_read)
+      .length,
+    unread: dummyNotifications.filter((notification) => !notification.is_read)
+      .length,
+  }
   const totalPage = Math.ceil(count / page_size)
   const baseUrl = `----not-that-important----/notifications/?is_read=${is_read ? is_read : ''}&page=`
   const previous = page === 1 ? null : `${baseUrl}${page - 1}`
@@ -34,6 +44,7 @@ notificationsRouter.get('/', async (req, res) => {
 
   const response: NotificationsResponseData = {
     count: filteredDummy.length,
+    counts,
     previous,
     next,
     results: slicedDummy,
