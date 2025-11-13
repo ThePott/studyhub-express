@@ -336,8 +336,8 @@ recruitRouter.get('/:recruitId/', async (req, res) => {
   const isLoggedIn = Boolean(req.headers.authorization)
   const recruitId = Number(req.params.recruitId)
   // NOTE: 자기 공고와 남의 공고를 비요할 땐 아래 주석을 바꿔주세요
-  const author_nickname = 'admin'
-  // const dummyAuthorNickname = "not-admin"
+  // const author_nickname = 'admin'
+  const author_nickname = 'not-admin'
   // ---- 여기까지
 
   if (!isLoggedIn) {
