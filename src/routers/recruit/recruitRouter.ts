@@ -452,4 +452,29 @@ recruitRouter.patch(
   }
 )
 
+recruitRouter.post('/:recruitUuid/applications', async (_req, res) => {
+  // NOTE: body, parmas는 안 중요함. 코드 생략
+
+  // NOTE: reponsee는 사용하지 않음. 언제나 스웨그 문서의 예시 응답 사용
+  const response = {
+    detail: 'string',
+    data: {
+      uuid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      recruitment_uuid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      recruitment_title: 'string',
+      user_uuid: 'string',
+      self_introduction: 'string',
+      motivation: 'string',
+      objective: 'string',
+      available_time: 'string',
+      has_study_experience: true,
+      study_experience: 'string',
+      status: 'string',
+      created_at: '2025-11-13T04:37:52.147Z',
+    },
+  }
+
+  res.status(200).json(response)
+})
+
 export default recruitRouter
