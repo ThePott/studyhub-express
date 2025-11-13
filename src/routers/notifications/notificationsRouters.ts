@@ -10,6 +10,7 @@ import { sleep } from '../utils/sleep.js'
 const notificationsRouter = express.Router()
 
 notificationsRouter.get('/', async (req, res) => {
+  console.log('---- noti get')
   // NOTE: 스켈레톤 확인용입니다
   await sleep(1000)
 
@@ -54,6 +55,7 @@ notificationsRouter.get('/', async (req, res) => {
 })
 
 notificationsRouter.patch('/:notificationId/read', async (req, res) => {
+  console.log('---- noti patch one')
   const notificationId = Number(req.params.notificationId || 0)
 
   const newNotificationArray = dummyNotifications.map((notification) =>
@@ -77,6 +79,7 @@ export default dummyNotifications
 })
 
 notificationsRouter.patch('/read-all', async (_req, res) => {
+  console.log('---- noti patch all')
   const newNotificationArray = dummyNotifications.map((notification) => ({
     ...notification,
     is_read: true,
