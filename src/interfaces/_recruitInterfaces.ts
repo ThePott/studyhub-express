@@ -87,9 +87,15 @@ export interface RecruitDetailLecture {
   price: number
 }
 
+export interface RecruitAuthor {
+  id: number
+  nickname: string
+  profile_img_url: string
+}
+
 export interface RecruitDetail {
   // NOTE: author api 요청드림
-  author: string
+  author: RecruitAuthor
   study_group_name: string
   uuid: string
   title: string

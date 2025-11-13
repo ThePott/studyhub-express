@@ -1,11 +1,15 @@
 import type { RecruitDetail } from '@/interfaces/_recruitInterfaces.js'
 
-const dummyRecruitDetailBase: Omit<RecruitDetail, 'author' | 'is_bookmarked'> =
-  {
-    study_group_name: 'AI 스터디 심화반',
-    uuid: 'study-uuid-12345',
-    title: 'AI 스터디 심화반 모집',
-    content: ` # 🤖 AI 심화 프로젝트 팀원 모집
+const dummyRecruitDetailBase: Omit<RecruitDetail, 'is_bookmarked'> = {
+  author: {
+    id: 1001,
+    nickname: 'AI마스터',
+    profile_img_url: 'https://example.com/profiles/ai_master.jpg',
+  },
+  study_group_name: 'AI 스터디 심화반',
+  uuid: 'study-uuid-12345',
+  title: 'AI 스터디 심화반 모집',
+  content: ` # 🤖 AI 심화 프로젝트 팀원 모집
 
 ## 📋 프로젝트 개요
 **AI 기반 챗봇 개발** 프로젝트를 함께 진행할 **열정적인 팀원**을 모집합니다!
@@ -71,47 +75,47 @@ This includes:
 • Tables structure
 • Links format
 `,
-    images: [
-      'https://example.com/images/ai_project_1.png',
-      'https://example.com/images/ai_project_2.png',
-    ],
-    attachments: [
-      {
-        id: 51,
-        file_name: 'ai_project_guide.pdf',
-        url: 'https://example.com/files/ai_project_guide.pdf',
-        size: 100000,
-      },
-      {
-        id: 52,
-        file_name: 'arch_logo.jpg',
-        url: 'https://media.istockphoto.com/id/2206580869/ko/%EC%82%AC%EC%A7%84/%ED%97%98%EC%A4%80%ED%95%9C-%ED%95%B4%EC%95%88%EC%84%A0%EA%B3%BC-%EB%B0%94%EB%8B%A4-%EC%BD%94%EB%A5%B4%EC%8B%9C%EC%B9%B4%EC%9D%98-%EB%86%92%EC%9D%80-%EC%A0%84%EB%A7%9D.jpg?s=2048x2048&w=is&k=20&c=UQNSU7WinhgHAIlLv2HsqwxCoc2E_aaPN1FJc1xfjYQ=',
-        size: 109000,
-      },
-    ],
-    expected_headcount: 5,
-    estimated_fee: 100000,
-    lectures: [
-      {
-        thumbnail_url: 'https://example.com/images/lecture_thumb.png',
-        name: '딥러닝 프로젝트 실습',
-        instructor: '홍길동',
-        link: 'https://example.com/lectures/101',
-        price: 50000,
-      },
-      {
-        thumbnail_url: 'https://example.com/images/lecture_thumb.png',
-        name: '셸로우 러닝 프로젝트 이론',
-        instructor: '길동형',
-        link: 'https://example.com/lectures/101',
-        price: 100000,
-      },
-    ],
-    tags: ['AI', 'Python', '딥러닝'],
-    close_at: '2025-11-30',
-    created_at: '2025-10-16T10:20:00Z',
-    view_count: 120,
-    bookmark_count: 5,
-  }
+  images: [
+    'https://example.com/images/ai_project_1.png',
+    'https://example.com/images/ai_project_2.png',
+  ],
+  attachments: [
+    {
+      id: 51,
+      file_name: 'ai_project_guide.pdf',
+      url: 'https://example.com/files/ai_project_guide.pdf',
+      size: 100000,
+    },
+    {
+      id: 52,
+      file_name: 'arch_logo.jpg',
+      url: 'https://media.istockphoto.com/id/2206580869/ko/%EC%82%AC%EC%A7%84/%ED%97%98%EC%A4%80%ED%95%9C-%ED%95%B4%EC%95%88%EC%84%A0%EA%B3%BC-%EB%B0%94%EB%8B%A4-%EC%BD%94%EB%A5%B4%EC%8B%9C%EC%B9%B4%EC%9D%98-%EB%86%92%EC%9D%80-%EC%A0%84%EB%A7%9D.jpg?s=2048x2048&w=is&k=20&c=UQNSU7WinhgHAIlLv2HsqwxCoc2E_aaPN1FJc1xfjYQ=',
+      size: 109000,
+    },
+  ],
+  expected_headcount: 5,
+  estimated_fee: 100000,
+  lectures: [
+    {
+      thumbnail_url: 'https://example.com/images/lecture_thumb.png',
+      name: '딥러닝 프로젝트 실습',
+      instructor: '홍길동',
+      link: 'https://example.com/lectures/101',
+      price: 50000,
+    },
+    {
+      thumbnail_url: 'https://example.com/images/lecture_thumb.png',
+      name: '셸로우 러닝 프로젝트 이론',
+      instructor: '길동형',
+      link: 'https://example.com/lectures/101',
+      price: 100000,
+    },
+  ],
+  tags: ['AI', 'Python', '딥러닝'],
+  close_at: '2025-11-30',
+  created_at: '2025-10-16T10:20:00Z',
+  view_count: 120,
+  bookmark_count: 5,
+}
 
 export default dummyRecruitDetailBase

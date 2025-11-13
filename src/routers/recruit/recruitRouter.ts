@@ -8,7 +8,10 @@ import { dummyApplicantArray } from './dummy/_dummyApplicatList.js'
 // 하흥주 임포트
 import dummyRecruitDetailWithBookmark from './dummy/dummyRecruitDetail/_dummyRecruitDetailWithBookmark.js'
 import dummyRecruitDetailBase from './dummy/dummyRecruitDetail/_dummyRecruitDetailBase.js'
-import type { RecruitDetail } from '@/interfaces/_recruitInterfaces.js'
+import type {
+  RecruitAuthor,
+  RecruitDetail,
+} from '@/interfaces/_recruitInterfaces.js'
 import dummyRecruitDetailBookmark from './dummy/dummyRecruitDetail/_dummyRecruitDetailBookmark.js'
 import fs from 'fs'
 import { dummyApplicantDetail } from './dummy/manageDeatilModal/_dummyApplicantDetail.js'
@@ -336,9 +339,14 @@ recruitRouter.get('/:recruitUuid/', async (req, res) => {
   const isLoggedIn = Boolean(req.headers.authorization)
   const recruitUuid = req.params.recruitUuid ?? ''
   // NOTE: 자기 공고와 남의 공고를 비요할 땐 아래 주석을 바꿔주세요
-  // const author = 'admin'
-  const author = 'not-admin'
+  // const nickname = 'admin'
+  const nickname = 'not-admin'
   // ---- 여기까지
+  const author: RecruitAuthor = {
+    id: 1,
+    nickname,
+    profile_img_url: 'not-that-important.jpg',
+  }
 
   if (!isLoggedIn) {
     const response: RecruitDetail = {
