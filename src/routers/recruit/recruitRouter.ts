@@ -332,20 +332,20 @@ recruitRouter.delete('/:recruitment_id', async (req, res) => {
 })
 
 // ---- 하흥주 라우트 ----
-recruitRouter.get('/:recruitId/', async (req, res) => {
+recruitRouter.get('/:recruitUuid/', async (req, res) => {
   const isLoggedIn = Boolean(req.headers.authorization)
-  const recruitId = Number(req.params.recruitId)
+  const recruitUuid = req.params.recruitUuid ?? ''
   // NOTE: 자기 공고와 남의 공고를 비요할 땐 아래 주석을 바꿔주세요
-  // const author_nickname = 'admin'
-  const author_nickname = 'not-admin'
+  // const author = 'admin'
+  const author = 'not-admin'
   // ---- 여기까지
 
   if (!isLoggedIn) {
     const response: RecruitDetail = {
       ...dummyRecruitDetailBase,
-      author_nickname,
+      author,
       is_bookmarked: false,
-      id: recruitId,
+      uuid: recruitUuid,
     }
     res.status(200).json(response)
     console.log('---- NOT LOGGED IN ----')
@@ -354,8 +354,8 @@ recruitRouter.get('/:recruitId/', async (req, res) => {
 
   const response: RecruitDetail = {
     ...dummyRecruitDetailWithBookmark,
-    author_nickname,
-    id: recruitId,
+    author,
+    uuid: recruitUuid,
   }
 
   res.status(200).json(response)
