@@ -2,7 +2,7 @@ import type { RecruitDetail } from '@/interfaces/_recruitInterfaces.js'
 
 const dummyRecruitDetailBase: Omit<RecruitDetail, 'author' | 'is_bookmarked'> =
   {
-    study_name: 'AI 스터디 심화반',
+    study_group_name: 'AI 스터디 심화반',
     uuid: 'study-uuid-12345',
     title: 'AI 스터디 심화반 모집',
     content: ` # 🤖 AI 심화 프로젝트 팀원 모집
