@@ -32,7 +32,7 @@ notificationsRouter.get('/', async (req, res) => {
 
   const count = filteredDummy.length
   const counts: NotificationCounts = {
-    all: dummyNotifications.length,
+    total: dummyNotifications.length,
     read: dummyNotifications.filter((notification) => notification.is_read)
       .length,
     unread: dummyNotifications.filter((notification) => !notification.is_read)
