@@ -8,7 +8,7 @@ export interface Applicant {
   available_time: string
   has_study_experience: boolean
   status: ApplicantStatus
-  created_at: string
+  applied_at: string
 }
 
 export type ApplicantStatus = 'PENDING' | 'ACCEPTED' | 'REJECTED'

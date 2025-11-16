@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { application } from 'express'
 import cors from 'cors'
 // NOTE: 임포트는 항상 js로 해주세요
 import lecturesRouter from './routers/lectures/lecturesRouter.js'

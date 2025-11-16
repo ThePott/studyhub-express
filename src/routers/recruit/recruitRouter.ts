@@ -14,7 +14,7 @@ import type {
 } from '@/interfaces/_recruitInterfaces.js'
 import dummyRecruitDetailBookmark from './dummy/dummyRecruitDetail/_dummyRecruitDetailBookmark.js'
 import fs from 'fs'
-import { dummyApplicantDetail } from './dummy/manageDeatilModal/_dummyApplicantDetail.js'
+import { dummyApplicantDetails } from './dummy/manageDeatilModal/_dummyApplicantDetail.js'
 import { penguinImageUrl } from '@/constants/imageUrls.js'
 import multer from 'multer'
 import { sleep } from '../utils/sleep.js'
@@ -187,13 +187,13 @@ recruitRouter.get('/user/:user_id', async (req, res) => {
 })
 
 // 공고 지원자 조회
-recruitRouter.get('/:recruitment_id/applications', async (req, res) => {
+recruitRouter.get('/:recruitment_uuid/applications/list', async (req, res) => {
   const isLoggedIn = Boolean(req.headers.authorization)
   const page = Number(req.query.page ?? 1)
-  const limit = Number(req.query.limit ?? 10)
+  const size = Number(req.query.page_size ?? 10)
 
-  const start = (page - 1) * limit
-  const end = start + limit
+  const start = (page - 1) * size
+  const end = start + size
   const slicedApplicantArray = dummyApplicantArray.slice(start, end)
 
   const total = dummyApplicantArray.length
@@ -202,11 +202,11 @@ recruitRouter.get('/:recruitment_id/applications', async (req, res) => {
   const response = {
     count: total,
     next: hasNextPage
-      ? `/api/v1/recruitment/${req.params.recruitment_id}/applications?page=${page + 1}&limit=${limit}`
+      ? `/api/v1/recruitment/${req.params.recruitment_uuid}/applications?page=${page + 1}&page_size=${size}`
       : null,
     previous:
       page > 1
-        ? `/api/v1/recruitment//${req.params.recruitment_id}/applications?page=${page - 1}&limit=${limit}`
+        ? `/api/v1/recruitment//${req.params.recruitment_uuid}/applications?page=${page - 1}&page_size=${size}`
         : null,
     results: slicedApplicantArray,
   }
@@ -214,19 +214,19 @@ recruitRouter.get('/:recruitment_id/applications', async (req, res) => {
   if (!isLoggedIn) {
     res.status(401).json({ detail: '로그인이 필요한 기능입니다.' })
   }
-
+  console.log(response)
   res.status(200).json(response)
 })
 
 // 공고 지원자 상세 조회
-recruitRouter.get('/applications/:application_id', async (req, res) => {
+recruitRouter.get('/applications/:application_uuid', async (req, res) => {
   const isLoggedIn = Boolean(req.headers.authorization)
   if (!isLoggedIn) {
     res.status(401).json({ detail: '로그인이 필요한 기능입니다.' })
   }
 
-  const applicationId = Number(req.params.application_id)
-  const application = dummyApplicantDetail.find(
+  const applicationId = Number(req.params.application_uuid)
+  const application = dummyApplicantDetails.find(
     (application) => application.id === applicationId
   )
   if (!application) {
@@ -236,43 +236,61 @@ recruitRouter.get('/applications/:application_id', async (req, res) => {
   return res.status(200).json(application)
 })
 
-// 지원자 승인/거절 통합 API
-recruitRouter.post('/applications/:application_id', async (req, res) => {
-  const isLoggedIn = Boolean(req.headers.authorization)
-  if (!isLoggedIn) {
-    return res.status(401).json({ detail: '권한이 없습니다.' })
+// 지원자 승인 API
+recruitRouter.post(
+  '/applications/:application_uuid/approve',
+  async (req, res) => {
+    const isLoggedIn = Boolean(req.headers.authorization)
+    if (!isLoggedIn) {
+      return res.status(401).json({ detail: '권한이 없습니다.' })
+    }
+
+    const applicationId = req.params.application_uuid
+    const application = dummyApplicantDetails.find(
+      (applicant) => applicant.uuid === applicationId
+    )
+
+    if (!application) {
+      return res.status(404).json({ error: '지원 내역을 찾을 수 없습니다.' })
+    }
+
+    if (application.status !== 'PENDING') {
+      return res
+        .status(400)
+        .json({ error: '이미 승인되거나 거절된 지원 내역입니다.' })
+    }
+
+    return res.status(200).json({ detail: '승인되었습니다' })
   }
+)
 
-  const applicationId = Number(req.params.application_id)
-  const application = dummyApplicantDetail.find(
-    (applicant) => applicant.id === applicationId
-  )
+// 지원자 거절 API
+recruitRouter.post(
+  '/applications/:application_uuid/reject',
+  async (req, res) => {
+    const isLoggedIn = Boolean(req.headers.authorization)
+    if (!isLoggedIn) {
+      return res.status(401).json({ detail: '권한이 없습니다.' })
+    }
 
-  const { status } = req.body
+    const applicationId = req.params.application_uuid
+    const application = dummyApplicantDetails.find(
+      (applicant) => applicant.uuid === applicationId
+    )
 
-  if (!application) {
-    return res.status(404).json({ error: '지원 내역을 찾을 수 없습니다.' })
+    if (!application) {
+      return res.status(404).json({ error: '지원 내역을 찾을 수 없습니다.' })
+    }
+
+    if (application.status !== 'PENDING') {
+      return res
+        .status(400)
+        .json({ error: '이미 승인되거나 거절된 지원 내역입니다.' })
+    }
+
+    return res.status(200).json({ detail: '거절되었습니다' })
   }
-
-  if (application.status !== 'PENDING') {
-    return res
-      .status(400)
-      .json({ error: '이미 승인되거나 거절된 지원 내역입니다.' })
-  }
-
-  dummyApplicantDetail[applicationId] = { ...application, status: status }
-
-  console.log(dummyApplicantDetail[applicationId])
-
-  const updatedApplication = {
-    application_id: applicationId,
-    status: status,
-    approved_at: new Date().toISOString(),
-    member_registered: status ? true : false,
-  }
-
-  return res.status(200).json(updatedApplication)
-})
+)
 
 // //북마크
 // recruitRouter.post('/:id/bookmark', async (req, res) => {
